@@ -1,3 +1,5 @@
+
+
 # Inferring Past Human Actions in Homes with Abductive Reasoning
 This is our PyTorch Implementation of "Inferring Past Human Actions in Homes with Abductive Reasoning" using the Action Genome dataset. 
 
@@ -43,8 +45,10 @@ We provide the frame-level action annotations obtained from Charades for the sna
 
 We also provide the pickle files for the different dataset setups (set == verification and sequence) which do not rely on how our code retrieves the frames. 
 
+## Model Checkpoints
+Please download the model checkpoints for the abductive past action set inference task [here](https://entuedu-my.sharepoint.com/:f:/g/personal/s190099_e_ntu_edu_sg/EkeYMd_W2k5Cplhdcadz0bABBJ9eh5WDvaDXhag65DdQaw?e=mg5jFz).
 
-## Action Set Training
+## Past Action Set Training
 For MLP, Relational Transformers, Graph Neural Network Encoder Decoder (GNNED), Relational Bilinear Pooling (RBP), or Bilinear Graph Encoder Decoder (BiGED) run:
 
 `python train.py --save_path path/to/save/ --lr 1e-5 --pool_type max --num_frames -1 --lr_scheduler --semantic --model_type *select_model*`
@@ -68,7 +72,7 @@ For rule-based inference run:
 `--cross_attention`: only for transformer model, to select cross-attention instead of self-attention
 
 
-## Action Set Prediction
+## Past Action Set Prediction
 The configuration during training is saved as a config.json file. Therefore, during evaluation, set the following paths accordingly:
 
 `python inference.py --model_path path/to/model/checkpoint --conf_path path/to/config.json
@@ -80,24 +84,24 @@ For rule-based inference:
 
 If you are trying to perform inference only on the last frame, add `--infer_last`. 
 
-## Action Sequence Training
+## Past Action Sequence Training
 The parameters are similar to the action set training procedure. The only difference is that you are required to select the relational model and load its checkpoint. Then, select the sequence model you want to use to decode the sequence of actions.
 
 `python train_sequence.py --num_frames -1 --save_path path/to/save --lr 1e-5 --nepoch 100 --model_type *select_relational_model* --task sequence --semantic --model_path path/to/relational/model --seq_layer 2 --seq_model_mlp_layers 2 --seq_model *select_seq_model* --hidden_dim 1936`
 
 
-## Action Sequence Prediction
+## Past Action Sequence Prediction
 The configuration during training is saved as a config.json file. Therefore, during evaluation, set the following paths accordingly:
 
 `python infer_sequence.py --save_path path/to/save/results --model_path path/to/relational/model --conf_path /path/to/config/file --seq_model_path path/to/sequence/model/checkpoint`
 
-## Action Verfication Training
+## Past Action Verfication Training
 The parameters are similar to the action set training procedure. Select the sequence model you want to use to perform action verification.
 
 `python train_verification.py --num_frames -1 --save_path path/to/save --lr 1e-5 --nepoch 100 --model_type *select_relational_model* --task verification`
 
 
-## Action Verification Prediction
+## Past Action Verification Prediction
 The configuration during training is saved as a config.json file. Therefore, during evaluation, set the following paths accordingly:
 
 `python infer_verification.py --save_path path/to/save/results --model_path path/to/relational/model --conf_path /path/to/config/file`
